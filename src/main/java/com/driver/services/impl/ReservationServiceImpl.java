@@ -35,10 +35,10 @@ public class ReservationServiceImpl implements ReservationService {
             ParkingLot parkingLot = parkingLotRepository3.findById(parkingLotId).get();
 
             //CHECKING SPOT AVAILABLE OR NOT
-            List<Spot>spotList=parkingLot.getSpot();
+            List<Spot>spotList=parkingLot.getSpotList();
             boolean checkForSpots = false;
             for (Spot spot : spotList) {
-                if (!spot.getOccupide()) {
+                if (!spot.getOccupied()) {
                     checkForSpots = true;
                     break;
                 }
@@ -65,22 +65,22 @@ public class ReservationServiceImpl implements ReservationService {
 
             for (Spot spot : spotList) {
                 if (requestSpotType.equals(SpotType.OTHERS) && spot.getSpotType().equals(SpotType.OTHERS)) {
-                    if (spot.getPriceperhour() * timeInHours < minimumPrice && !spot.getOccupide()) {
-                        minimumPrice = spot.getPriceperhour() * timeInHours;
+                    if (spot.getPricePerHour() * timeInHours < minimumPrice && !spot.getOccupied()) {
+                        minimumPrice = spot.getPricePerHour() * timeInHours;
                         checkForSpots = true;
                         spotChosen = spot;
                     }
                 } else if (requestSpotType.equals(SpotType.FOUR_WHEELER) && spot.getSpotType().equals(SpotType.OTHERS) ||
                         spot.getSpotType().equals(SpotType.FOUR_WHEELER)) {
-                    if (spot.getPriceperhour() * timeInHours < minimumPrice && !spot.getOccupide()) {
-                        minimumPrice = spot.getPriceperhour() * timeInHours;
+                    if (spot.getPricePerHour() * timeInHours < minimumPrice && !spot.getOccupied()) {
+                        minimumPrice = spot.getPricePerHour() * timeInHours;
                         checkForSpots = true;
                         spotChosen = spot;
                     }
                 } else if (requestSpotType.equals(SpotType.TWO_WHEELER) && spot.getSpotType().equals(SpotType.OTHERS) ||
                         spot.getSpotType().equals(SpotType.FOUR_WHEELER) || spot.getSpotType().equals(SpotType.TWO_WHEELER)) {
-                    if (spot.getPriceperhour() * timeInHours < minimumPrice && !spot.getOccupide()) {
-                        minimumPrice = spot.getPriceperhour() * timeInHours;
+                    if (spot.getPricePerHour() * timeInHours < minimumPrice && !spot.getOccupied()) {
+                        minimumPrice = spot.getPricePerHour() * timeInHours;
                         checkForSpots = true;
                         spotChosen = spot;
                     }
@@ -93,16 +93,16 @@ public class ReservationServiceImpl implements ReservationService {
             }
 
             assert spotChosen != null;
-            spotChosen.setOccupide(true);
+            spotChosen.setOccupied(true);
 
             Reservation reservation = new Reservation();
-            reservation.setNumberofhours(timeInHours);
+            reservation.setNumberOfHours(timeInHours);
             reservation.setSpot(spotChosen);
             reservation.setUser(user);
 
             //Bidirectional
             spotChosen.getReservationList().add(reservation);
-            user.getReservation().add(reservation);
+            user.getReservationList().add(reservation);
 
             userRepository3.save(user);
             spotRepository3.save(spotChosen);

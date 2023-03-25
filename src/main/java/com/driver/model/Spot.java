@@ -10,8 +10,8 @@ public class Spot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private  int priceperhour;
-    private Boolean occupide;
+    private  int pricePerHour;
+    private Boolean occupied;
     @Enumerated(EnumType.STRING)
     private SpotType spotType;
 
@@ -26,10 +26,10 @@ public class Spot {
 
     }
 
-    public Spot(int id, int priceperhour, Boolean occupide, SpotType spotType, ParkingLot parkingLot, List<Reservation> reservationList) {
+    public Spot(int id, int pricePerHour, Boolean occupied, SpotType spotType, ParkingLot parkingLot, List<Reservation> reservationList) {
         this.id = id;
-        this.priceperhour = priceperhour;
-        this.occupide = occupide;
+        this.pricePerHour = pricePerHour;
+        this.occupied = occupied;
         this.spotType = spotType;
         this.parkingLot = parkingLot;
         this.reservationList = reservationList;
@@ -43,20 +43,20 @@ public class Spot {
         this.id = id;
     }
 
-    public int getPriceperhour() {
-        return priceperhour;
+    public int getPricePerHour() {
+        return pricePerHour;
     }
 
-    public void setPriceperhour(int priceperhour) {
-        this.priceperhour = priceperhour;
+    public void setPricePerHour(int pricePerHour) {
+        this.pricePerHour = pricePerHour;
     }
 
-    public Boolean getOccupide() {
-        return occupide;
+    public Boolean getOccupied() {
+        return occupied;
     }
 
-    public void setOccupide(Boolean occupide) {
-        this.occupide = occupide;
+    public void setOccupied(Boolean occupied) {
+        this.occupied = occupied;
     }
 
     public SpotType getSpotType() {
