@@ -9,7 +9,7 @@ public class Payment {
     private int id;
 
     @Column(columnDefinition = "TINYINT(1)")
-    private Boolean paymentCompleted;
+    private Boolean isPaymentCompleted;
 
     @Enumerated(EnumType.STRING)
     private PaymentMode paymentMode;
@@ -21,9 +21,9 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int id, Boolean paymentCompleted, PaymentMode paymentMode, Reservation reservation) {
+    public Payment(int id, Boolean isPaymentCompleted, PaymentMode paymentMode, Reservation reservation) {
         this.id = id;
-        this.paymentCompleted = paymentCompleted;
+        this.isPaymentCompleted = isPaymentCompleted;
         this.paymentMode = paymentMode;
         this.reservation = reservation;
     }
@@ -36,12 +36,13 @@ public class Payment {
         this.id = id;
     }
 
+
     public Boolean getPaymentCompleted() {
-        return paymentCompleted;
+        return isPaymentCompleted;
     }
 
     public void setPaymentCompleted(Boolean paymentCompleted) {
-        this.paymentCompleted = paymentCompleted;
+        isPaymentCompleted = paymentCompleted;
     }
 
     public PaymentMode getPaymentMode() {
