@@ -20,10 +20,10 @@ public class Spot {
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    ParkingLot parkingLot;
+    private ParkingLot parkingLot;
 
     @OneToMany(mappedBy = "spot",cascade = CascadeType.ALL)
-    List<Reservation> reservationList=new ArrayList<>();
+    private List<Reservation> reservationList=new ArrayList<>();
 
     public Spot(){
 

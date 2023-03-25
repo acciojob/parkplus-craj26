@@ -15,12 +15,12 @@ public class Reservation {
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    Spot spot;
+    private Spot spot;
 
     @ManyToOne
     @JoinColumn
     @JsonIgnore
-    User user;
+    private User user;
 
     @OneToOne(mappedBy = "reservation",cascade = CascadeType.ALL)
     private Payment payment;
@@ -30,8 +30,10 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(int numberOfHours) {
+    public Reservation(int numberOfHours, Spot spot, User user) {
         this.numberOfHours = numberOfHours;
+        this.spot = spot;
+        this.user = user;
     }
 
     public Reservation(int id, int numberOfHours, Spot spot, User user, Payment payment) {
