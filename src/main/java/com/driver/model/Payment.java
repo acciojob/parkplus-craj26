@@ -10,7 +10,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //@Column(columnDefinition = "TINYINT(1)")
+    @Column(columnDefinition = "TINYINT(1)")
     private Boolean paymentCompleted;//isPaymentCompleted()
 
     @Enumerated(EnumType.STRING)
