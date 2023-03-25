@@ -10,8 +10,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean isPaymentCompleted;//isPaymentCompleted()
+//    @Column(columnDefinition = "TINYINT(1)")
+//    private Boolean isPaymentCompleted;//isPaymentCompleted()
 
     @Enumerated(EnumType.STRING)
     private PaymentMode paymentMode;
@@ -24,9 +24,8 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(int id, Boolean isPaymentCompleted, PaymentMode paymentMode, Reservation reservation) {
+    public Payment(int id, PaymentMode paymentMode, Reservation reservation) {
         this.id = id;
-        this.isPaymentCompleted = isPaymentCompleted;
         this.paymentMode = paymentMode;
         this.reservation = reservation;
     }
@@ -40,13 +39,7 @@ public class Payment {
     }
 
 
-    public Boolean getisPaymentCompleted() {
-        return isPaymentCompleted;
-    }
 
-    public void setisPaymentCompleted(Boolean paymentCompleted) {
-        this.isPaymentCompleted = paymentCompleted;
-    }
 
     public PaymentMode getPaymentMode() {
         return paymentMode;
