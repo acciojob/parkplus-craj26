@@ -26,26 +26,17 @@ public class PaymentServiceImpl implements PaymentService {
 
         Reservation reservation=reservationRepository2.findById(reservationId).get();
         Spot spot=reservation.getSpot();
-
         int bill=reservation.getNumberOfHours()*spot.getPricePerHour();
-        if(bill<amountSent){
-            throw  new Exception("Insufficient Amount");
-        }
-
-        if(mode.equalsIgnoreCase("cash") || mode.equalsIgnoreCase("card")|| mode.equalsIgnoreCase("upi")){
+        if(mode.equalsIgnoreCase("cash")||mode.equalsIgnoreCase("upi")||mode.equalsIgnoreCase("card")){
             Payment payment=new Payment();
-
             if(mode.equalsIgnoreCase("cash")){
                 payment.setPaymentMode(PaymentMode.CASH);
-            }
-            else if(mode.equalsIgnoreCase("card")){
+            }else if(mode.equalsIgnoreCase("upi"))
+                payment.setPaymentMode(PaymentMode.UPI);
+            else
                 payment.setPaymentMode(PaymentMode.CARD);
-            }
-            else payment.setPaymentMode(PaymentMode.UPI);
-
             payment.setPaymentCompleted(true);
             payment.setReservation(reservation);
-
             reservation.setPayment(payment);
             reservationRepository2.save(reservation);
             return payment;

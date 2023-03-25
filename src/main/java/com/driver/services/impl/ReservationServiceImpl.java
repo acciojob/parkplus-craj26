@@ -23,19 +23,19 @@ public class ReservationServiceImpl implements ReservationService {
     ParkingLotRepository parkingLotRepository3;
     @Override
     public Reservation reserveSpot(Integer userId, Integer parkingLotId, Integer timeInHours, Integer numberOfWheels) throws Exception {
-
-
+        //Reserve a spot in the given parkingLot such that the total price is minimum. Note that the price per hour for each spot is different
+        //Note that the vehicle can only be parked in a spot having a type equal to or larger than given vehicle
+        //If parkingLot is not found, user is not found, or no spot is available, throw "Cannot make reservation" exception.
         try {
-            //first step checking userid and parkinglotid
+
             if (!userRepository3.findById(userId).isPresent() || !parkingLotRepository3.findById(parkingLotId).isPresent()) {
                 throw new Exception("Cannot make reservation");
             }
 
-            User user=userRepository3.findById(userId).get();
+            User user = userRepository3.findById(userId).get();
             ParkingLot parkingLot = parkingLotRepository3.findById(parkingLotId).get();
 
-            //CHECKING SPOT AVAILABLE OR NOT
-            List<Spot>spotList=parkingLot.getSpotList();
+            List<Spot> spotList = parkingLot.getSpotList();
             boolean checkForSpots = false;
             for (Spot spot : spotList) {
                 if (!spot.getOccupied()) {
@@ -43,12 +43,12 @@ public class ReservationServiceImpl implements ReservationService {
                     break;
                 }
             }
-            if(checkForSpots==false){
+
+            if (!checkForSpots) {
                 throw new Exception("Cannot make reservation");
             }
 
 
-            //CHECKING SPOTYPE
             SpotType requestSpotType;
 
             if (numberOfWheels > 4) {
@@ -56,6 +56,7 @@ public class ReservationServiceImpl implements ReservationService {
             } else if (numberOfWheels > 2) {
                 requestSpotType = SpotType.FOUR_WHEELER;
             } else requestSpotType = SpotType.TWO_WHEELER;
+
 
             int minimumPrice = Integer.MAX_VALUE;
 
@@ -108,14 +109,9 @@ public class ReservationServiceImpl implements ReservationService {
             spotRepository3.save(spotChosen);
 
             return reservation;
-
-
-
-
-
-        }catch (Exception e){
+        }
+        catch (Exception e){
             return null;
         }
-
     }
 }
